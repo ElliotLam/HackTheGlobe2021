@@ -1,18 +1,16 @@
 // Civitas Score Calculator
 // Each of the categories are weighted equally
 
-var custAcq, credScore, revenue, age, score = 0;
-
+var score = 0; //keeps track of Civitas calculator accumulated points
+var credScore;
 var name1;
 var acq;
 var rev;
-var totalScore;
 var loc;
 var failRate;
-var regionalPol;
-var comImpact;
-var regionNum;
-
+var regionalPol; //the number of regional policies and the efficacy of those policies
+var comImpact; //the amount of impact a business has on the community
+var regionNum; //each region is linked to a number, regionNum holds the corresponding number inputted by the user for their region
 var rentInc; //lowers score if the binary variable is 1, as it indicates there is a minimum 5% rent increase from 2012-2018
 var rentDec; //increase score if the binary variable is 1, as it indicates there is a minimum 5% rent decrease from 2012-2018
 var disp; //binary variable that indicates if a region is experiencing ongoing displacement
@@ -27,7 +25,7 @@ const readline = require('readline').createInterface({
 
 readline.question('What is your name?', name => {
     readline.question('Which city is your business located in?', busLoc => {
-        readline.question('Which region is your business located in? Input the number \n 0.Anza Vista \n 1.Hayes Valley \n 2.Japantown', regNum => {
+        readline.question('Which region is your business located in? Input the number \n 0.Anza Vista \n 1.Hayes Valley \n 2.Japantown \n 3. Geary and 33rd \n 4.Broadmoor \n 5.West Soma \n 6.Duboce Triangle \n 7. Mission District \n 8. Forest Hill \n 9. Portola', regNum => {
             readline.question('What is the cost of customer acquisition?', acqAmt => {
                 readline.question('What is your annual revenue?', revAmt => {
                     readline.question('What is the credit score of your business?', credAmt => {
@@ -47,7 +45,6 @@ readline.question('What is your name?', name => {
                         acq = parseFloat(acqAmt);
                         getCostAcq(acq);
 
-
                         console.log(`The revenue you have inputted is: ${revAmt}!`);
                         rev = parseFloat(revAmt);
                         getRev(rev);
@@ -56,6 +53,8 @@ readline.question('What is your name?', name => {
                         credScore = parseFloat(credAmt);
                         getCred(credScore);
 
+                        //accesses data from Urban Displacement Project's dataset
+                        // https://github.com/urban-displacement
                         fs.createReadStream('data.csv')
                             .pipe(csv())
                             .on('data',(row)=>{
@@ -132,8 +131,6 @@ function getRegionNum(regionNum){
 }
 
 
-
-
 // Benchmark of customer acquisition costs is $10 for retail businesses
 // https://www.propellercrm.com/blog/customer-acquisition-cost
 // https://www.demandjump.com/blog/customer-acquisition-cost-by-industry
@@ -199,18 +196,29 @@ function getComImpact(comImpact){
     score += comImpact;
 }
 
+//If the rent increases by over 5% from 2012-2018, no score is added
+//Existing residents may find this price increase is unaffordable, driving them out, and contributing to gentrification
+//If the rent does not increase over 5% from 2012-2018, the score is added by 6 points
+
 function getRentIncrease(r){
     if (r==1){
-        score += 1;
+        score += 0;
+    }
+    else if (r==0){
+        score += 6
     }
 }
 
+//If the rent decreases by over 5% from 2012-2018, the score added is high (12.5 points)
+//A decrease in price makes the region more affordable, allowing existing residents to stay comfortably
 function getRentDecrease(g){
     if (g==1){
         score += 12.5;
     }
 }
 
+//No points are added if a region is under the category type that indicates 'ongoing displacement' (OD)
+//High displacement rates are a key indicator towards gentrification of a region
 function getDisplacement (d){
     if (d != 'OD'){
         score += 12.5;
