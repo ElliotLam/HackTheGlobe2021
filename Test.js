@@ -215,7 +215,6 @@ function getDisplacement (d){
     if (d != 'OD'){
         score += 12.5;
     }
-    console.log("d is" + d);
     console.log("Your total score is:" + score);
 
     if (score >= 70) {
