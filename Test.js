@@ -25,7 +25,7 @@ const readline = require('readline').createInterface({
 
 readline.question('What is your name?', name => {
     readline.question('Which city is your business located in?', busLoc => {
-        readline.question('Which region is your business located in? Input the number \n 0.Anza Vista \n 1.Hayes Valley \n 2.Japantown \n 3. Geary and 33rd \n 4.Broadmoor \n 5.West Soma \n 6.Duboce Triangle \n 7. Mission District \n 8. Forest Hill \n 9. Portola', regNum => {
+        readline.question('Which region is your business located in? Input the number \n 0. Anza Vista \n 1. Hayes Valley \n 2. Japantown \n 3. Geary and 33rd \n 4. Broadmoor \n 5. West Soma \n 6. Duboce Triangle \n 7. Mission District \n 8. Forest Hill \n 9. Portola', regNum => {
             readline.question('What is the cost of customer acquisition?', acqAmt => {
                 readline.question('What is your annual revenue?', revAmt => {
                     readline.question('What is the credit score of your business?', credAmt => {
@@ -33,23 +33,23 @@ readline.question('What is your name?', name => {
                         name1 = name;
                         getName(name1);
 
-                        console.log(`You have indicated that your business is in ${busLoc}!`);
+                        console.log(`You have indicated that your business is in ${busLoc}`);
                         loc = busLoc;
                         getLocation(loc);
 
-                        console.log(`You have indicated that your business region is ${regNum}!`);
+                        console.log(`You have indicated that your business region is ${regNum}`);
                         regionNum = parseFloat(regNum);
                         getRegionNum(regionNum);
 
-                        console.log(`The cost you have inputted is: ${acqAmt}!`);
+                        console.log(`The cost you have inputted is: ${acqAmt}`);
                         acq = parseFloat(acqAmt);
                         getCostAcq(acq);
 
-                        console.log(`The revenue you have inputted is: ${revAmt}!`);
+                        console.log(`The revenue you have inputted is: ${revAmt}`);
                         rev = parseFloat(revAmt);
                         getRev(rev);
 
-                        console.log(`The credit score you have inputted is: ${credAmt}!`);
+                        console.log(`The credit score you have inputted is: ${credAmt}`);
                         credScore = parseFloat(credAmt);
                         getCred(credScore);
 
