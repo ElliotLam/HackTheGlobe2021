@@ -1,0 +1,9 @@
+{
+  "name": "HackTheGlobe2021",
+  "version": "1.0.0",
+  "dependencies": {
+    "csv-parser": "^3.0.0",
+    "prompt": "^1.1.0",
+    "prompt-sync": "^4.2.0"
+  }
+}
